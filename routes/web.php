@@ -25,7 +25,7 @@ Route::get('home', function () {
 
 Route::get('about', function () {
     return view('about');
-})->middleware('age');
+});
 
 
 Route::get('contact', [ContactController::class, 'index']);
