@@ -28,3 +28,7 @@ Route::get('about', function () {
 });
 
 Route::get('our-contact', [ContactController::class, 'index'])->name('contact');
+
+Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
+    return view('dashboard');
+})->name('dashboard');
