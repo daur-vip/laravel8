@@ -9,6 +9,16 @@
     <div class="py-12">
         <div class="container">
             <div class="row">
+
+                <div class="col-md-8">
+                    <div class="card">
+                        <div class="card-header">
+                            All Categories
+                        </div>
+                    </div>
+                </div>
+
+
                 <table class="table">
                     <thead>
                         <tr>
