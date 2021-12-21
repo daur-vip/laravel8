@@ -9,9 +9,18 @@
         <div class="container">
             <div class="row">
 
-
+                
                 <div class="col-md-8">
                     <div class="card">
+
+
+                        @if(session('success'))
+                        <div class="alert alert-success alert-dismissible" role="alert">
+                            <span type="button" class="close" data-bs-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></span>
+                            <strong>{{ session('success') }}</strong>
+                          </div>
+                        @endif
+
                         <div class="card-header">
                             All Categories
                         </div>
@@ -50,11 +59,18 @@
                             Add Category
                         </div>
                         <div class="card-body">
-                            <form>
+                            <form action="{{ route('store.category') }}" method="POST">
+                            @csrf
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Category Name</label>
-                                    <input type="text" class="form-control" id="exampleInputEmail1"
-                                        aria-describedby="emailHelp">
+                                    <input type="text" name="category_name" class="form-control">
+                                    
+                                    @error('category_name')
+                                        <span class="text-danger">
+                                            {{ $message     }}
+                                        </span>
+                                    @enderror
+
                                 </div>
 
                                 <button type="submit" class="btn btn-primary">Add category</button>
