@@ -19,11 +19,11 @@ class CategoryController extends Controller
         //     ->select('categories.*', 'users.name')
         //     ->latest()->paginate(5);
 
-        //$categories = DB::table('categories')->latest()->paginate(5);
-
+   
         $categories = Category::latest()->paginate(5);
+        $trashCategories = Category::onlyTrashed()->latest()->paginate(5);
 
-        return view('admin.category.index', compact('categories'));
+        return view('admin.category.index', compact('categories', 'trashCategories'));
     }
 
     public function addCategory(Request $request)
@@ -59,16 +59,34 @@ class CategoryController extends Controller
 
     public function editCategory($id)
     {
-        $category = Category::find($id);
+
+        //Query Builder
+        $category = DB::table('categories')->where('id', $id)->first();
+        
+        //Eloquent ORM
+        //$category = Category::find($id);
+
         return view('admin.category.edit', compact('category'));
     }
 
     public function updateCategory(Request $request, $id)
     {
-        $update = Category::find($id)->update([
-            'category_name' => $request->category_name,
-            'user_id' => Auth::user()->id,
-        ]);
+        // $update = Category::find($id)->update([
+        //     'category_name' => $request->category_name,
+        //     'user_id' => Auth::user()->id,
+        // ]);
+
+        $data = array();
+        $data['category_name'] = $request->category_name;
+        $data['user_id'] = Auth::user()->id;
+        DB::table('categories')->where('id', $id)->update($data);
+
         return Redirect()->route('all.category')->with('success', 'Category updated successfully');
+    }
+
+    public function softDeleteCategory($id)
+    {
+        Category::find($id)->delete();
+        return Redirect()->back()->with('success', 'Category moved to trash');
     }
 }

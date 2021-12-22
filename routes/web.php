@@ -43,6 +43,12 @@ Route::get('/category/edit/{id}', [CategoryController::class, 'editCategory'])->
 
 Route::post('/category/update/{id}', [CategoryController::class, 'updateCategory'])->name('update.category');
 
+Route::get('/category/soft-delete/{id}', [CategoryController::class, 'softDeleteCategory'])->name('soft_delete.category');
+
+Route::get('/category/delete/{id}', [CategoryController::class, 'deleteCategory'])->name('delete.category');
+
+Route::get('/category/restore/{id}', [CategoryController::class, 'restoreCategory'])->name('restore.category');
+
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
 
