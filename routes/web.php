@@ -34,20 +34,20 @@ Route::get('about', function () {
 Route::get('our-contact', [ContactController::class, 'index'])->name('contact');
 
 //Category Controller
-Route::get('/category/all', [CategoryController::class, 'allCategory'])->name('all.category');
+Route::get('/category/all', [CategoryController::class, 'all'])->name('all.category');
 
-Route::post('/category/add', [CategoryController::class, 'addCategory'])->name('store.category');
+Route::post('/category/add', [CategoryController::class, 'add'])->name('store.category');
 
 
-Route::get('/category/edit/{id}', [CategoryController::class, 'editCategory'])->name('edit.category');
+Route::get('/category/edit/{id}', [CategoryController::class, 'edit'])->name('edit.category');
 
-Route::post('/category/update/{id}', [CategoryController::class, 'updateCategory'])->name('update.category');
+Route::post('/category/update/{id}', [CategoryController::class, 'update'])->name('update.category');
 
-Route::get('/category/soft-delete/{id}', [CategoryController::class, 'softDeleteCategory'])->name('soft_delete.category');
+Route::get('/category/soft-delete/{id}', [CategoryController::class, 'softDelete'])->name('soft_delete.category');
 
-Route::get('/category/delete/{id}', [CategoryController::class, 'deleteCategory'])->name('delete.category');
+Route::get('/category/delete/{id}', [CategoryController::class, 'delete'])->name('delete.category');
 
-Route::get('/category/restore/{id}', [CategoryController::class, 'restoreCategory'])->name('restore.category');
+Route::get('/category/restore/{id}', [CategoryController::class, 'restore'])->name('restore.category');
 
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
