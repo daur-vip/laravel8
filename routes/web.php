@@ -6,6 +6,8 @@ use App\Http\Controllers\ContactController;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\BrandController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -33,11 +35,20 @@ Route::get('about', function () {
 
 Route::get('our-contact', [ContactController::class, 'index'])->name('contact');
 
+
+Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
+
+    // $users = User::all();
+    $users = DB::table('users')->get();
+
+    return view('dashboard', compact('users'));
+})->name('dashboard');
+
+
 //Category Controller
 Route::get('/category/all', [CategoryController::class, 'all'])->name('all.category');
 
 Route::post('/category/add', [CategoryController::class, 'add'])->name('store.category');
-
 
 Route::get('/category/edit/{id}', [CategoryController::class, 'edit'])->name('edit.category');
 
@@ -49,11 +60,6 @@ Route::get('/category/delete/{id}', [CategoryController::class, 'delete'])->name
 
 Route::get('/category/restore/{id}', [CategoryController::class, 'restore'])->name('restore.category');
 
+//Brand Controller
+Route::get('/brand/all', [BrandController::class, 'all'])->name('all.brand');
 
-Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
-
-    // $users = User::all();
-    $users = DB::table('users')->get();
-
-    return view('dashboard', compact('users'));
-})->name('dashboard');
