@@ -45,7 +45,7 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
 })->name('dashboard');
 
 
-//Category Controller
+//Category
 Route::get('/category/all', [CategoryController::class, 'all'])->name('all.category');
 
 Route::post('/category/add', [CategoryController::class, 'add'])->name('store.category');
@@ -60,7 +60,7 @@ Route::get('/category/delete/{id}', [CategoryController::class, 'delete'])->name
 
 Route::get('/category/restore/{id}', [CategoryController::class, 'restore'])->name('restore.category');
 
-//Brand Controller
+//Brand
 Route::get('/brand/all', [BrandController::class, 'all'])->name('all.brand');
 
 Route::post('/brand/add', [BrandController::class, 'add'])->name('store.brand');
@@ -70,3 +70,8 @@ Route::get('/brand/edit/{id}', [BrandController::class, 'edit'])->name('edit.bra
 Route::post('/brand/update/{id}', [BrandController::class, 'update'])->name('update.brand');
 
 Route::get('/brand/delete/{id}', [BrandController::class, 'delete'])->name('delete.brand');
+
+//Multipic
+Route::get('/multipic/all', [BrandController::class, 'multipic'])->name('multipic');
+
+Route::post('/multipic/add', [BrandController::class, 'addMultipic'])->name('store.multipic');
