@@ -64,3 +64,9 @@ Route::get('/category/restore/{id}', [CategoryController::class, 'restore'])->na
 Route::get('/brand/all', [BrandController::class, 'all'])->name('all.brand');
 
 Route::post('/brand/add', [BrandController::class, 'add'])->name('store.brand');
+
+Route::get('/brand/edit/{id}', [BrandController::class, 'edit'])->name('edit.brand');
+
+Route::post('/brand/update/{id}', [BrandController::class, 'update'])->name('update.brand');
+
+Route::get('/brand/delete/{id}', [BrandController::class, 'delete'])->name('delete.brand');

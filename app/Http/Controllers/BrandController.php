@@ -6,10 +6,12 @@ use Illuminate\Http\Request;
 use App\Models\Brand;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Redis;
+use Image;
 
 class BrandController extends Controller
 {
-    public function all(){
+    public function all()
+    {
 
         $brands = Brand::latest()->paginate(5);
         return view('admin.brand.index', compact('brands'));
@@ -31,15 +33,24 @@ class BrandController extends Controller
         );
 
         $brandImage = $request->file('brand_image');
+
+        // $imageNameGen = hexdec(uniqid());
+        // $imageExtension = strtolower($brandImage->getClientOriginalExtension());
+        // $newImageName = $imageNameGen . '.' . $imageExtension;
+
+        // $uploadLocation = 'images/brands/';
+        // $fullImagePath = $uploadLocation . $newImageName;
+
+        // $brandImage->move($uploadLocation, $newImageName);
+
+        $imageNameGen = hexdec(uniqid()) . '.' . strtolower($brandImage->getClientOriginalExtension());
+
+        $fullImagePath = 'images/brands/' . $imageNameGen;
+
+        Image::make($brandImage)->resize(300,200)->save($fullImagePath);
+
         
-        $imageNameGen = hexdec(uniqid());
-        $imageExtension = strtolower($brandImage->getClientOriginalExtension());
-        $newImageName = $imageNameGen.'.'.$imageExtension;
 
-        $uploadLocation = 'images/brands/';
-        $fullImagePath = $uploadLocation.$newImageName;
-
-        $brandImage->move($uploadLocation, $newImageName);
 
         Brand::create([
             'brand_name' => $request->brand_name,
@@ -47,6 +58,76 @@ class BrandController extends Controller
         ]);
 
         return Redirect()->back()->with('success', 'Brand added successfully');
-
     }
+
+    public function edit($id)
+    {
+        $brand = Brand::find($id);
+        return view('admin.brand.edit', compact('brand'));
+    }
+
+    public function update(Request $request, $id)
+    {
+
+        $currentBrand = Brand::find($id);
+        $validatedData = $request->validate(
+            [
+                'brand_name' => 'required|max:50|unique:brands,brand_name,'.$id,
+                'brand_image' => 'mimes:jpg,jpeg,png',
+            ],
+            [
+                'brand_name.required' => 'Please input brand name',
+                'brand_name.unique' => 'The brand ' . $request->brand_name . ' already exists',
+                'brand_name.max' => 'Max lenght of brand name is 50',
+                'brand_image.mimes' => 'Please add image file',
+            ]
+        );
+
+        $old_image = $request->old_image;
+
+        $brandImage = $request->file('brand_image');
+
+        if ($brandImage) {
+
+            $imageNameGen = hexdec(uniqid());
+            $imageExtension = strtolower($brandImage->getClientOriginalExtension());
+            $newImageName = $imageNameGen . '.' . $imageExtension;
+
+            $uploadLocation = 'images/brands/';
+            $fullImagePath = $uploadLocation . $newImageName;
+
+            $brandImage->move($uploadLocation, $newImageName);
+
+            unlink($old_image);
+
+            Brand::find($id)->update([
+                'brand_name' => $request->brand_name,
+                'brand_image' => $fullImagePath,
+            ]);
+
+            
+        } else {
+
+            Brand::find($id)->update([
+                'brand_name' => $request->brand_name,
+            ]);
+
+        }
+
+        return Redirect()->back()->with('success', 'Brand updated successfully');
+    }
+
+    public function delete($id){
+        
+        $brand = Brand::find($id);
+        
+        $oldImage = $brand->brand_image;
+        unlink($oldImage);
+
+        $brand->delete();
+        
+        return Redirect()->back()->with('success', 'Brand have been deleted successfully');
+    
+    }
+
 }

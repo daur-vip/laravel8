@@ -46,7 +46,8 @@
                                     <tr>
                                         <th scope="row">{{ $brands->firstItem() + $loop->index }}</th>
                                         <td>{{ $brand->brand_name }}</td>
-                                        <td><img src="{{ asset($brand->brand_image) }}" alt="" style="height:40px;"></td>
+                                        <td><img src="{{ asset($brand->brand_image) }}" alt="" style="height:40px;">
+                                        </td>
                                         <td>
                                             @if ($brand->created_at != null)
                                                 {{ Carbon\Carbon::parse($brand->created_at)->diffForHumans() }}
@@ -58,7 +59,7 @@
                                             <a href="{{ url('brand/edit/' . $brand->id) }}"
                                                 class="btn btn-info">Edit</a>
                                             <a href="{{ url('brand/delete/' . $brand->id) }}"
-                                                class="btn btn-danger">Delete</a>
+                                                class="btn btn-danger" onclick="return confirm('Are you sure?')">Delete</a>
 
                                         </td>
                                     </tr>
