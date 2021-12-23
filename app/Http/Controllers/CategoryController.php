@@ -38,10 +38,10 @@ class CategoryController extends Controller
             ]
         );
 
-        Category::insert([
+        Category::create([
             'category_name' => $request->category_name,
             'user_id' => Auth::user()->id,
-            'created_at' => Carbon::now(),
+            // 'created_at' => Carbon::now(),
         ]);
 
         // $category = new Category;

@@ -63,3 +63,4 @@ Route::get('/category/restore/{id}', [CategoryController::class, 'restore'])->na
 //Brand Controller
 Route::get('/brand/all', [BrandController::class, 'all'])->name('all.brand');
 
+Route::post('/brand/add', [BrandController::class, 'add'])->name('store.brand');
