@@ -68,12 +68,14 @@
                     <div class="card-body p-5">
 
                         <h4 class="text-dark mb-5">Sign In</h4>
+                        <x-jet-validation-errors class="mb-4" />
                         <form method="POST" action="{{ route('login') }}">
                             @csrf
                             <div class="row">
                                 <div class="form-group col-md-12 mb-4">
-                                    <input type="email" name="email" class="form-control input-lg"
-                                        placeholder="Email">
+                                    <input type="email" class="form-control input-lg"
+                                        placeholder="Email" type="email" name="email"
+                                        required>
                                 </div>
                                 <div class="form-group col-md-12 ">
                                     <input type="password" class="form-control input-lg" name="password"
