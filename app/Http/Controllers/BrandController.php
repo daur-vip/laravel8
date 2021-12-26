@@ -10,14 +10,15 @@ use App\Models\Multipic;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Redis;
 use Image;
+use Auth;
 
 class BrandController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth');       
+        $this->middleware('auth');
     }
-    
+
     public function all()
     {
 
@@ -154,4 +155,10 @@ class BrandController extends Controller
 
         return Redirect()->back()->with('success', 'Brand added successfully');
     }
+
+    public function logout() {
+        Auth::logout();
+        return Redirect()->route('login')->with('success', 'User logged out');
+    }
+
 }

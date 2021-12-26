@@ -44,10 +44,7 @@ Route::get('our-contact', [ContactController::class, 'index'])->name('contact');
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
 
-    // $users = User::all();
-    $users = DB::table('users')->get();
-
-    return view('dashboard', compact('users'));
+    return view('admin.index');
 })->name('dashboard');
 
 
@@ -81,3 +78,6 @@ Route::get('/brand/delete/{id}', [BrandController::class, 'delete'])->name('dele
 Route::get('/multipic/all', [BrandController::class, 'multipic'])->name('multipic');
 
 Route::post('/multipic/add', [BrandController::class, 'addMultipic'])->name('store.multipic');
+
+
+Route::get('user/logout', [BrandController::class, 'logout'])->name('user.logout');
