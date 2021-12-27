@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\BrandController;
+use App\Http\Controllers\HomeController;
 
 
 /*
@@ -82,3 +83,9 @@ Route::post('/multipic/add', [BrandController::class, 'addMultipic'])->name('sto
 
 
 Route::get('user/logout', [BrandController::class, 'logout'])->name('user.logout');
+
+
+// Admin routes
+
+Route::get('home/slider', [HomeController::class, 'homeSlider'])->name('home.slider');
+
